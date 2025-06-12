@@ -1,4 +1,4 @@
-fetch('posts.json')
+fetch('../blog/posts.json')
   .then(response => response.json())
   .then(posts => {
     const container = document.getElementById('post-list');
