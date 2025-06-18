@@ -41,13 +41,23 @@ def main():
                     f"""<!DOCTYPE html>
             <html lang="es">
             <head>
-              <meta charset="UTF-8">
-              <title>{title}</title>
+                <meta charset="UTF-8">
+                <title>{title}</title>
+                <link rel="stylesheet" href="/css/hacker.css">
+                <style>
+                    .post {{
+                    max-width: 60rem;
+                    margin: auto;
+                    padding: 2rem;
+                    }}
+                </style>
             </head>
             <body>
-            {html_content}
-            <hr>
-            <p><a href="index.html">← Volver al blog</a></p>
+                <section class="post">
+            {html_content}      
+                <hr>
+                <p><a href="index.html">← Volver al blog</a></p>
+                </section>
             </body>
             </html>
             """)
