@@ -1,4 +1,4 @@
-fetch('../blog/posts.json')
+fetch('/blog/posts.json')
   .then(response => response.json())
   .then(posts => {
     const container = document.getElementById('post-list');
@@ -7,7 +7,7 @@ fetch('../blog/posts.json')
     posts.forEach(post => {
       const article = document.createElement('article');
       article.innerHTML = `
-        <h3><a href="${post.url}">${post.title}</a></h3>
+        <h3><a href="/blog/${post.url}">${post.title}</a></h3>
         <small>${post.date}</small>
         <p>${post.excerpt}</p>
       `;

@@ -37,30 +37,37 @@ def main():
                 continue
 
             with open(html_path, "w", encoding="utf-8") as f:
-                f.write(
-                    f"""<!DOCTYPE html>
-            <html lang="es">
-            <head>
-                <meta charset="UTF-8">
-                <title>{title}</title>
-                <link rel="stylesheet" href="/css/hacker.css">
-                <style>
-                    .post {{
-                    max-width: 60rem;
-                    margin: auto;
-                    padding: 2rem;
-                    }}
-                </style>
-            </head>
-            <body>
-                <section class="post">
-            {html_content}      
-                <hr>
-                <p><a href="index.html">← Volver al blog</a></p>
-                </section>
-            </body>
-            </html>
-            """)
+                f.write(f"""<!DOCTYPE html>
+                     <html lang="es">
+                     <head>
+                         <meta charset="UTF-8">
+                         <meta name="viewport" content="width=device-width, initial-scale=1">
+                         <title>{title}</title>
+                         <link rel="stylesheet" href="/css/hacker.css">
+                         <style>
+                             .post {{
+                               max-width: 60rem;
+                               margin: auto;
+                               padding: 2rem;
+                               padding-left: 3rem;
+                             }}
+                             @media (max-width: 768px) {{
+                               .post {{
+                                 padding: 1rem;
+                                 padding-left: 1.2rem;
+                               }}
+                             }}
+                         </style>
+                     </head>
+                     <body>
+                         <section class="post">
+                     {html_content}
+                         <hr>
+                         <p><a href="/blog/">← Volver al blog</a> · <a href="/">Inicio</a></p>
+                         </section>
+                     </body>
+                     </html>
+                     """)
 
             timestamp = os.path.getmtime(md_path)
             date = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
