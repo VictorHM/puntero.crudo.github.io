@@ -1,3 +1,5 @@
+Date: 2025-07-02
+
 # When I fell in Love with Computers
 
 I was 11 and I didn't have a PC. Many friends had a 386 or even a 486. I was reading PC magazines -PC World is the one I remember the most- for a year or more already. It started out of pure interest, from a child that looked at those machines like something magic. Maybe the reason was the good memories I had with the Spectrum ZX of my uncle when my cousin and I were 8 years old. But I didn't have a computer, it was what it was. Expensive thing those computers.

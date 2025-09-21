@@ -1,3 +1,5 @@
+Date: 2025-07-21
+
 # Our Memory is not The Reality
 Did you notice, at some point in your life, that a memory of some event ended up changing, even in your own recollection? I realized that years ago and it was surprising. I am kind of a story-teller, and one of the main abilities for being one is to create a narrative about the story, diminish parts of the story and amplify others in order to make the story appealing and interesting. 
 

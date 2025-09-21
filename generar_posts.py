@@ -8,14 +8,16 @@ MD_DIR = "posts_md"
 HTML_DIR = "blog"
 OUTPUT_FILE = os.path.join(HTML_DIR, "posts.json")
 
-def md_to_html(md_path):
+def md_to_html_and_meta(md_path):
     with open(md_path, "r", encoding="utf-8") as f:
         md_content = f.read()
-    html_content = markdown.markdown(md_content)
+    md = markdown.Markdown(extensions=['meta'])
+    html_content = md.convert(md_content)
+    meta = getattr(md, 'Meta', {})
     print("=== DEBUG HTML ===")
     print(html_content[:400])
     print("==================")
-    return html_content
+    return html_content, meta
 
 def extract_title_excerpt(html):
     # title_match = re.search(r"<h1.*?>(.*?)</h1>", html, re.IGNORECASE)
@@ -35,8 +37,17 @@ def main():
             base_name = os.path.splitext(file)[0]
             html_path = os.path.join(HTML_DIR, base_name + ".html")
 
-            html_content = md_to_html(md_path)
+            html_content, meta = md_to_html_and_meta(md_path)
             title, excerpt = extract_title_excerpt(html_content)
+
+            # Tomar la fecha del meta; si no hay, usar la de modificación
+            date_str = None
+            if meta and 'date' in meta:
+                # md.Meta devuelve listas de valores; cogemos el primero
+                date_str = meta['date'][0]
+            if not date_str:
+                timestamp = os.path.getmtime(md_path)
+                date_str = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
             if not title or not excerpt:
                 print(f"⚠️  Error en '{file}', sin título o párrafo.")
                 continue
@@ -74,12 +85,9 @@ def main():
                      </html>
                      """)
 
-            timestamp = os.path.getmtime(md_path)
-            date = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
-
             posts.append({
                 "title": title,
-                "date": date,
+                "date": date_str,
                 "url": base_name + ".html",
                 "excerpt": excerpt
             })

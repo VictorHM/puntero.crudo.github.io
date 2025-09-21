@@ -1,6 +1,8 @@
+Date: 2025-09-01
+
 # Just Another Cycle of Hype
 Or what poeople like to call it, another bubble. I am talking about AI. And my
-take, tl;dr is: this is another .com bubble, but with new technology.
+take, tl;dr is: this is another **DotCom** bubble, but with new technology.
 
 If we take a look at the Dot Com bubble there are some points we can take as an
 example to try to understand what will be the future like. First of it, after
