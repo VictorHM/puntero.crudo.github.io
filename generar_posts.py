@@ -12,11 +12,16 @@ def md_to_html(md_path):
     with open(md_path, "r", encoding="utf-8") as f:
         md_content = f.read()
     html_content = markdown.markdown(md_content)
+    print("=== DEBUG HTML ===")
+    print(html_content[:400])
+    print("==================")
     return html_content
 
 def extract_title_excerpt(html):
-    title_match = re.search(r"<h1.*?>(.*?)</h1>", html, re.IGNORECASE)
-    para_match = re.search(r"<p>(.*?)</p>", html, re.IGNORECASE)
+    # title_match = re.search(r"<h1.*?>(.*?)</h1>", html, re.IGNORECASE)
+    # para_match = re.search(r"<p>(.*?)</p>", html, re.IGNORECASE)
+    title_match = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.IGNORECASE | re.DOTALL)
+    para_match  = re.search(r"<p[^>]*>([\s\S]*?)</p>", html, re.IGNORECASE | re.DOTALL)
     if not title_match or not para_match:
         return None, None
     return title_match.group(1).strip(), para_match.group(1).strip()
