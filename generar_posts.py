@@ -51,7 +51,10 @@ def main():
             if not title or not excerpt:
                 print(f"⚠️  Error en '{file}', sin título o párrafo.")
                 continue
-
+# TODO el siguiente bloque hardcode estilo y estructura HTML. Probablemente 
+# querre cambiar esto y que lea el patron de algun sitio.
+# TODO despues del titulo, define el css que vamos a usar. Mejor cambiar esto a
+# algo variable o algo asi.
             with open(html_path, "w", encoding="utf-8") as f:
                 f.write(f"""<!DOCTYPE html>
                      <html lang="es">
@@ -59,21 +62,8 @@ def main():
                          <meta charset="UTF-8">
                          <meta name="viewport" content="width=device-width, initial-scale=1">
                          <title>{title}</title>
-                         <link rel="stylesheet" href="/css/hacker.css">
-                         <style>
-                             .post {{
-                               max-width: 60rem;
-                               margin: auto;
-                               padding: 2rem;
-                               padding-left: 3rem;
-                             }}
-                             @media (max-width: 768px) {{
-                               .post {{
-                                 padding: 1rem;
-                                 padding-left: 1.2rem;
-                               }}
-                             }}
-                         </style>
+                         <link rel="stylesheet" href="/css/mono-reset.css">
+                         <link rel="stylesheet" href="/css/mono.css">
                      </head>
                      <body>
                          <section class="post">
@@ -84,14 +74,16 @@ def main():
                      </body>
                      </html>
                      """)
-
+            # Esto crea el set de titulo y resumen de la entrada con el link.
             posts.append({
                 "title": title,
                 "date": date_str,
                 "url": base_name + ".html",
                 "excerpt": excerpt
             })
-
+    # Esto ordena esa lista por fecha de creacion original (en el encabezado del
+    # post markdown. De esta forma, se presenta el ultimo escrito el primero en
+    # la pagina.
     posts.sort(key=lambda x: x["date"], reverse=True)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
