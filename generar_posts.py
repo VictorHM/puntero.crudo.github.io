@@ -11,7 +11,12 @@ OUTPUT_FILE = os.path.join(HTML_DIR, "posts.json")
 def md_to_html_and_meta(md_path):
     with open(md_path, "r", encoding="utf-8") as f:
         md_content = f.read()
-    md = markdown.Markdown(extensions=['meta'])
+    md = markdown.Markdown(extensions=[
+        'meta',
+        'extra',            # añade tablas, listas de definición, notes...
+        'codehilite',       # opcional: resaltado de código
+        'fenced_code',      # soporte a ```bloques de código```
+    ])
     html_content = md.convert(md_content)
     meta = getattr(md, 'Meta', {})
     print("=== DEBUG HTML ===")
