@@ -1,4 +1,4 @@
-Date: 2025-09-2025
+Date: 2025-09-10
 
 # New Development Frameworks, Same Old Shit
 A new framework has been imposed in another company. And you receive a link to the document that describes how, when and where it will change things… apparently. But when you read it, it is a generic document that could be applied to ANY company. Nothing specific of the company you work from, nothing particular or adapted to the way the company works. A document that the people working on it took a few months to finish, but that you could think it was a template from the internet to apply to your company. But someone forgot to adapt it.
