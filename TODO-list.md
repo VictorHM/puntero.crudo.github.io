@@ -9,5 +9,9 @@ modificacion de scripts para generar posts desde markdown, etc.
 - [ ] Insercion de video: funciona bien? Como incrustarlo de forma automatica?
 
 ## Contenido
+- [X] Proyectos. Pagina de proyectos interesantes que quiero compartir.
+  Autogeneracion como los posts, pero para esa entrada solo.
+- [ ] Anadir proyectos a compartir: Raylib y proyectos de juegos retro.
 - [ ] Pagina de cv. Experiencias previas y que hacia, posibles codigos que
   desarrolle a partir de esas experiencias...
+

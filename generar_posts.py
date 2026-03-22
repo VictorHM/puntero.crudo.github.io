@@ -33,6 +33,81 @@ def extract_title_excerpt(html):
         return None, None
     return title_match.group(1).strip(), para_match.group(1).strip()
 
+def load_projects():
+    projects = []
+
+    for file in sorted(os.listdir("proyectos_md/")):
+        if not file.endswith(".md"):
+            continue
+
+        path = os.path.join("proyectos_md", file)
+
+        with open(path, encoding="utf-8") as f:
+            md_text = f.read()
+
+        html, meta = md_to_html_and_meta(md_text)
+
+        projects.append({
+            "title": meta.get("title", [""])[0],
+            "link": meta.get("link", [""])[0],
+            "image": meta.get("image", [""])[0],
+            "description": html
+        })
+
+    return projects
+
+def generate_projects_page(projects):
+
+    blocks = ""
+
+    for p in projects:
+        blocks += f"""
+        <article class="project-card">
+            <img src="{p['image']}" alt="">
+            <div>
+                <h3><a href="{p['link']}">{p['title']}</a></h3>
+                {p['description']}
+            </div>
+        </article>
+        """
+
+    html = f"""
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Proyectos interesantes</title>
+<link rel="stylesheet" href="/css/mono-reset.css">
+<link rel="stylesheet" href="/css/mono.css">
+<link rel="stylesheet" href="/css/projects.css">
+</head>
+<body>
+
+<header>PUNTERO CRUDO*</header>
+
+<main>
+<h2>Proyectos interesantes</h2>
+{blocks}
+<br><br>
+</main>
+
+<footer>
+    <p>&copy; 2025 Puntero Crudo</p>
+    <p>Style and Design: <a
+                             href="https://owickstrom.github.io/the-monospace-web">Monospace
+                             Web</a> by Oskar Wickström (@owickstrom)</p>
+</footer>
+
+</body>
+</html>
+"""
+
+    os.makedirs("proyectos", exist_ok=True)
+
+    with open("proyectos/index.html", "w", encoding="utf-8") as f:
+        f.write(html)
+
+
 def main():
     posts = []
 
@@ -95,6 +170,9 @@ def main():
         json.dump(posts, f, indent=2, ensure_ascii=False)
 
     print(f"✅ Generados {len(posts)} artículos y actualizado '{OUTPUT_FILE}'.")
+
+    projects = load_projects()
+    generate_projects_page(projects)
 
 if __name__ == "__main__":
     main()
