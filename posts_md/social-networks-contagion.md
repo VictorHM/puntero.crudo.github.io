@@ -1,7 +1,7 @@
 Date: 2026-04-25
 
 # On How Everything Becomes a Social Network: The Disease
-
+![social-networks-are-wrong.png](../assets/social-networks-are-wrong.png)
 Many years ago I had a Twitter account. For different reasons, I had some followers
 and I was engaged. However, after a couple of years, I realized how much it was
 ruining my mood. The amount of interactions with random people, some looking to
