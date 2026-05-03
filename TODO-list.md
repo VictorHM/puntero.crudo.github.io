@@ -3,10 +3,13 @@ Lista de detalles a implementar para simplificar la creacion de la web,
 modificacion de scripts para generar posts desde markdown, etc.
 
 ## Generacion y Automatizacion
-- [ ] Probar como se generan tablas desde Markdown con el script en python.
-- [ ] Insercion deimagenes. Como funciona con la plantilla Monospace? Como se
+- [x] Probar como se generan tablas desde Markdown con el script en python.
+- [x] Insercion deimagenes. Como funciona con la plantilla Monospace? Como se
   genera desde python con el script?
 - [ ] Insercion de video: funciona bien? Como incrustarlo de forma automatica?
+- [ ] Generar los links de cabecera en Proyectos que vuelven al inicio y al blog.
+- [ ] Proyectos: tienen que aparecer como una breve secci'on no clickable, sino como imagen de proyecto, descripcion y link al original
+- [ ] Cabeceras constantes en todas las paginas con enlaces a secciones. Unificar para cuando cambie.
 
 ## Contenido
 - [X] Proyectos. Pagina de proyectos interesantes que quiero compartir.

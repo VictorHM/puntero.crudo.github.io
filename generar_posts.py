@@ -25,8 +25,6 @@ def md_to_html_and_meta(md_path):
     return html_content, meta
 
 def extract_title_excerpt(html):
-    # title_match = re.search(r"<h1.*?>(.*?)</h1>", html, re.IGNORECASE)
-    # para_match = re.search(r"<p>(.*?)</p>", html, re.IGNORECASE)
     title_match = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.IGNORECASE | re.DOTALL)
     para_match  = re.search(r"<p[^>]*>([\s\S]*?)</p>", html, re.IGNORECASE | re.DOTALL)
     if not title_match or not para_match:
@@ -75,15 +73,21 @@ def generate_projects_page(projects):
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Proyectos interesantes</title>
-<link rel="stylesheet" href="/css/mono-reset.css">
-<link rel="stylesheet" href="/css/mono.css">
-<link rel="stylesheet" href="/css/projects.css">
+  <meta charset="UTF-8">
+  <title>Proyectos</title>
+   <link rel="stylesheet" href="/css/mono-reset.css">
+   <link rel="stylesheet" href="/css/mono.css">
 </head>
 <body>
-
-<header>PUNTERO CRUDO*</header>
+  <header>
+    <h1>Puntero Crudo*</h1>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/blog/index.html">Blog</a>
+      <a href="/proyectos/">Proyectos</a>
+      <a href="">Mis Proyectos</a>
+    </nav>
+  </header>
 
 <main>
 <h2>Proyectos interesantes</h2>
