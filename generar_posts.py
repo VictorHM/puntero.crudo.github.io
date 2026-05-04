@@ -4,9 +4,60 @@ import markdown
 import re
 from datetime import datetime
 
+# Definiciones y generacion para todas las paginas del blog, incluidas las entradas.
 MD_DIR = "posts_md"
 HTML_DIR = "blog"
 OUTPUT_FILE = os.path.join(HTML_DIR, "posts.json")
+SITE_NAME = "Puntero Crudo*"
+NAV_ITEMS = [
+    ("Inicio", "/"),
+    ("Blog", "/blog/"),
+    ("Proyectos", "/proyectos/"),
+    ("Mis Proyectos", "/mis_proyectos/"),
+]
+
+def render_nav():
+    links = "\n".join(
+        f'      <a href="{href}">{label}</a>'
+        for label, href in NAV_ITEMS
+    )
+    return f"""  <header>
+    <h1>{SITE_NAME}</h1>
+    <nav>
+{links}
+    </nav>
+  </header>"""
+
+def render_footer():
+    return """  <footer>
+    <p>&copy; 2025 Puntero Crudo</p>
+    <p>Style and Design: <a
+                             href="https://owickstrom.github.io/the-monospace-web">Monospace
+                             Web</a> by Oskar Wickström (@owickstrom)</p>
+  </footer>"""
+
+def render_page(title, main_content, extra_body=""):
+    return f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <link rel="stylesheet" href="/css/mono-reset.css">
+  <link rel="stylesheet" href="/css/mono.css">
+</head>
+<body>
+{render_nav()}
+
+  <main>
+{main_content}
+  </main>
+
+{render_footer()}
+{extra_body}
+</body>
+</html>
+"""
 
 def md_to_html_and_meta(md_path):
     with open(md_path, "r", encoding="utf-8") as f:
@@ -24,14 +75,17 @@ def md_to_html_and_meta(md_path):
     print("==================")
     return html_content, meta
 
+# Excerts que se usan para generar la pagina principal de blogs, mostrando las primeras lineas del post
+# de forma que se pueda ver de que va.
 def extract_title_excerpt(html):
     title_match = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.IGNORECASE | re.DOTALL)
     para_match  = re.search(r"<p[^>]*>([\s\S]*?)</p>", html, re.IGNORECASE | re.DOTALL)
     if not title_match or not para_match:
         return None, None
-    return title_match.group(1).strip(), para_match.group(1).strip()
+    excerpt = re.sub(r"<img\b[^>]*>", "", para_match.group(1), flags=re.IGNORECASE)
+    return title_match.group(1).strip(), excerpt.strip()
 
-def load_projects():
+def generate_project_posts():
     projects = []
 
     for file in sorted(os.listdir("proyectos_md/")):
@@ -54,8 +108,7 @@ def load_projects():
 
     return projects
 
-def generate_projects_page(projects):
-
+def generate_projects_index_page(projects):
     blocks = ""
 
     for p in projects:
@@ -69,50 +122,20 @@ def generate_projects_page(projects):
         </article>
         """
 
-    html = f"""
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Proyectos</title>
-   <link rel="stylesheet" href="/css/mono-reset.css">
-   <link rel="stylesheet" href="/css/mono.css">
-</head>
-<body>
-  <header>
-    <h1>Puntero Crudo*</h1>
-    <nav>
-      <a href="/">Inicio</a>
-      <a href="/blog/index.html">Blog</a>
-      <a href="/proyectos/">Proyectos</a>
-      <a href="">Mis Proyectos</a>
-    </nav>
-  </header>
+    main_content = f"""
+        <h2>Proyectos interesantes</h2>
+        {blocks}
+        <br><br>
+    """
+    html = render_page("Proyectos", main_content)
 
-<main>
-<h2>Proyectos interesantes</h2>
-{blocks}
-<br><br>
-</main>
-
-<footer>
-    <p>&copy; 2025 Puntero Crudo</p>
-    <p>Style and Design: <a
-                             href="https://owickstrom.github.io/the-monospace-web">Monospace
-                             Web</a> by Oskar Wickström (@owickstrom)</p>
-</footer>
-
-</body>
-</html>
-"""
-
+    # print(html)
     os.makedirs("proyectos", exist_ok=True)
 
     with open("proyectos/index.html", "w", encoding="utf-8") as f:
         f.write(html)
 
-
-def main():
+def generate_blog_posts():
     posts = []
 
     for file in os.listdir(MD_DIR):
@@ -135,29 +158,15 @@ def main():
             if not title or not excerpt:
                 print(f"⚠️  Error en '{file}', sin título o párrafo.")
                 continue
-# TODO el siguiente bloque hardcode estilo y estructura HTML. Probablemente 
-# querre cambiar esto y que lea el patron de algun sitio.
-# TODO despues del titulo, define el css que vamos a usar. Mejor cambiar esto a
-# algo variable o algo asi.
+                # Genera los links para cada entrada, volver al blog o a Inicio. Desde dentro de la entrada.
+            main_content = f"""    <section class="post">
+                {html_content}
+                <hr>
+                <p><a href="/blog/">&larr; Volver al blog</a> &middot; <a href="/">Inicio</a></p>
+                </section>
+            """
             with open(html_path, "w", encoding="utf-8") as f:
-                f.write(f"""<!DOCTYPE html>
-                     <html lang="es">
-                     <head>
-                         <meta charset="UTF-8">
-                         <meta name="viewport" content="width=device-width, initial-scale=1">
-                         <title>{title}</title>
-                         <link rel="stylesheet" href="/css/mono-reset.css">
-                         <link rel="stylesheet" href="/css/mono.css">
-                     </head>
-                     <body>
-                         <section class="post">
-                     {html_content}
-                         <hr>
-                         <p><a href="/blog/">← Volver al blog</a> · <a href="/">Inicio</a></p>
-                         </section>
-                     </body>
-                     </html>
-                     """)
+                f.write(render_page(title, main_content))
             # Esto crea el set de titulo y resumen de la entrada con el link.
             posts.append({
                 "title": title,
@@ -175,9 +184,38 @@ def main():
 
     print(f"✅ Generados {len(posts)} artículos y actualizado '{OUTPUT_FILE}'.")
 
-    projects = load_projects()
-    generate_projects_page(projects)
+    return posts
+
+def generate_blog_index_page(posts):
+    blocks = ""
+
+    for p in posts:
+        blocks += f"""
+        <article>
+            <h3><a href="/blog/{p['url']}">{p['title']}</a></h3>
+            <small>{p['date']}</small>
+            <p>{p['excerpt']}</p>
+        </article>
+        """
+
+    main_content = f"""
+        <h2>Artículos recientes</h2>
+        {blocks}
+    """
+    html = render_page("Blog", main_content)
+    print(html)
+    os.makedirs(HTML_DIR, exist_ok=True)
+
+    with open(os.path.join(HTML_DIR, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def main():
+    posts = generate_blog_posts()
+    generate_blog_index_page(posts)
+
+    projects = generate_project_posts()
+    generate_projects_index_page(projects)
 
 if __name__ == "__main__":
     main()
-

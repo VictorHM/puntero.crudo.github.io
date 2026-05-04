@@ -7,9 +7,10 @@ modificacion de scripts para generar posts desde markdown, etc.
 - [x] Insercion deimagenes. Como funciona con la plantilla Monospace? Como se
   genera desde python con el script?
 - [ ] Insercion de video: funciona bien? Como incrustarlo de forma automatica?
-- [ ] Generar los links de cabecera en Proyectos que vuelven al inicio y al blog.
+- [x] Generar los links de cabecera en Proyectos que vuelven al inicio y al blog.
 - [ ] Proyectos: tienen que aparecer como una breve secci'on no clickable, sino como imagen de proyecto, descripcion y link al original
-- [ ] Cabeceras constantes en todas las paginas con enlaces a secciones. Unificar para cuando cambie.
+- [x] Cabeceras constantes en todas las paginas con enlaces a secciones. Unificar para cuando cambie.
+- [ ] Determinar si js/blogs.js es aun necesario o si es mejor que la forma estatica de la generacion de posts.
 
 ## Contenido
 - [X] Proyectos. Pagina de proyectos interesantes que quiero compartir.
