@@ -10,7 +10,11 @@ modificacion de scripts para generar posts desde markdown, etc.
 - [x] Generar los links de cabecera en Proyectos que vuelven al inicio y al blog.
 - [ ] Proyectos: tienen que aparecer como una breve secci'on no clickable, sino como imagen de proyecto, descripcion y link al original
 - [x] Cabeceras constantes en todas las paginas con enlaces a secciones. Unificar para cuando cambie.
-- [ ] Determinar si js/blogs.js es aun necesario o si es mejor que la forma estatica de la generacion de posts.
+- [x] Determinar si js/blogs.js es aun necesario o si es mejor que la forma estatica de la generacion de posts.
+
+## Errores y Bugs
+- [ ] Mis Proyectos y Proyectos, ahora vacios, muestran la misma pagina, ni siquiera cambia el titulo.
+- 
 
 ## Contenido
 - [X] Proyectos. Pagina de proyectos interesantes que quiero compartir.

@@ -22,15 +22,11 @@ if [ ! -d "output" ]; then
     exit 1
 fi
 
-echo -e "${YELLOW}📦 Deploying to ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}${NC}"
+echo -e "${YELLOW}📡 Deploying to ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}${NC}"
 
-# Deploy generated output and static files
+# Deploy complete output folder to server
 rsync -avz --delete \
     output/ \
-    css/ \
-    js/ \
-    assets/ \
-    index.html \
     "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/"
 
 echo -e "${GREEN}✅ Deployment complete!${NC}"

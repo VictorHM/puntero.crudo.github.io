@@ -1,4 +1,6 @@
 """Main orchestrator for blog generation."""
+import os
+import shutil
 from typing import Dict, Any
 from .config import load_config
 from .models import SiteConfig, Section
@@ -18,6 +20,28 @@ def get_generator_for_section(section: Section, site_config: Dict[str, Any]):
     return generator_class(section, site_config)
 
 
+def copy_static_files(output_base: str = "output"):
+    """Copy static files (css, js, assets, index.html) to output folder."""
+    os.makedirs(output_base, exist_ok=True)
+
+    static_files = ["index.html"]
+    static_dirs = ["css", "js", "assets"]
+
+    # Copy static files
+    for file in static_files:
+        if os.path.exists(file):
+            dest = os.path.join(output_base, file)
+            shutil.copy2(file, dest)
+
+    # Copy static directories
+    for dir_name in static_dirs:
+        if os.path.exists(dir_name):
+            dest = os.path.join(output_base, dir_name)
+            if os.path.exists(dest):
+                shutil.rmtree(dest)
+            shutil.copytree(dir_name, dest)
+
+
 def generate_all(config_path: str = "config.yaml", output_base: str = "output") -> Dict[str, Any]:
     """Generate all sections."""
     config = load_config(config_path, output_base)
@@ -33,6 +57,10 @@ def generate_all(config_path: str = "config.yaml", output_base: str = "output") 
     results = {}
 
     print(f"🚀 Generating blog for {config.name}...")
+
+    # Copy static files to output
+    print(f"📋 Copying static files...")
+    copy_static_files(output_base)
 
     for section in config.sections:
         print(f"\n📝 Processing section: {section.name}")
