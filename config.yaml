@@ -1,0 +1,37 @@
+site:
+  name: "Puntero Crudo*"
+  description: "A personal blog about technology, programming, and life"
+  author: "PunteroCrudo"
+  year: 2025
+
+navigation:
+  - label: "Inicio"
+    href: "/"
+  - label: "Blog"
+    href: "/blog/"
+  - label: "Proyectos"
+    href: "/proyectos/"
+  - label: "Mis Proyectos"
+    href: "/mis_proyectos/"
+
+sections:
+  - name: "Blog"
+    path: "blog"
+    input_dir: "posts_md"
+    output_dir: "blog"
+    type: "blog"
+    description: "Personal articles and thoughts"
+
+  - name: "Proyectos"
+    path: "proyectos"
+    input_dir: "proyectos_md"
+    output_dir: "proyectos"
+    type: "projects"
+    description: "Interesting projects I follow"
+
+  - name: "Mis Proyectos"
+    path: "mis_proyectos"
+    input_dir: "mis_proyectos_md"
+    output_dir: "mis_proyectos"
+    type: "projects"
+    description: "My personal projects"
